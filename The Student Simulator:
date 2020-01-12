@@ -1,0 +1,62 @@
+#include <iostream>
+#include <iomanip>
+#include <cstring>
+#include <strings.h>
+using namespace std;
+
+class Student {
+private:
+    char name[51];
+    char surname[51];
+    int hp;
+    int energy;
+    void change_field(int  &field, int delta){
+        field+=delta;
+        if (field > 100) field = 100;
+        if (field < 0) field = 0;
+    }
+
+public:
+    void start_game(){
+        cin >> name >>surname;
+        hp =100;
+        energy = 100;
+    }
+    bool is_alive(){
+        return (hp >0);
+    }
+    void show(){
+        if(is_alive()){
+        cout <<name<<' '<<surname<<':';
+        cout <<" HP = "<<setw(3)<<hp<<", Energy = "<<setw(3)<<energy<<".";}
+        else {
+        cout <<name<<" "<<surname<<":";
+        cout <<" HP = 000 . Game over.";}
+    }
+    void eat(){
+        if (is_alive()){
+            change_field(energy,7);
+            change_field(hp,1);
+    }}
+    void wait() {
+        if(is_alive()){
+            change_field(energy,-3);
+            change_field(hp,1);}
+    }
+};
+
+int main(){
+    Student s;
+    int M;
+    char action[50];
+    cin >>M;
+    for (int i =0; i < M; i++){
+        cin >>action;
+        if (!strcmp(action , "Wait")){
+            s.wait();
+            s.show();
+        } else s.eat();
+               s.show();
+    }
+    return 0;
+}
